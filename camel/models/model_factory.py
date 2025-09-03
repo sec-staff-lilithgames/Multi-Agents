@@ -22,6 +22,7 @@ from camel.models.aws_bedrock_model import AWSBedrockModel
 from camel.models.azure_openai_model import AzureOpenAIModel
 from camel.models.base_model import BaseModelBackend
 from camel.models.cohere_model import CohereModel
+from camel.models.codex_cli_model import CodexCliModel
 from camel.models.crynux_model import CrynuxModel
 from camel.models.deepseek_model import DeepSeekModel
 from camel.models.gemini_model import GeminiModel
@@ -68,6 +69,7 @@ class ModelFactory:
     _MODEL_PLATFORM_TO_CLASS_MAP: ClassVar[
         Dict[ModelPlatformType, Type[BaseModelBackend]]
     ] = {
+        ModelPlatformType.CODEXCLI: CodexCliModel,
         ModelPlatformType.OLLAMA: OllamaModel,
         ModelPlatformType.VLLM: VLLMModel,
         ModelPlatformType.SGLANG: SGLangModel,

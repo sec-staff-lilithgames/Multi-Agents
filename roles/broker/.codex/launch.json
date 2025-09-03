@@ -1,0 +1,18 @@
+{
+  "name": "Broker",
+  "role": "broker",
+  "description": "Interactive broker CLI that parses requirement.md, asks user for details, and executes via boss/workers.",
+  "command": "python",
+  "args": [
+    "examples/usecases/codex_cli_broker_mcp/broker_cli.py",
+    "-r",
+    "requirement.md"
+  ],
+  "mode": "stdio",
+  "model": {
+    "provider": "openai",
+    "name": "gpt-5-high"
+  },
+  "env": {
+  }
+}

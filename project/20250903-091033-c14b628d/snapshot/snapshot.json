@@ -1,0 +1,30 @@
+{
+  "project_id": "20250903-091033-c14b628d",
+  "created_at": "2025-09-03T09:10:47.242084",
+  "requirements_file": "/Users/kwai-sec/Desktop/magent/requirement.txt",
+  "summary": {
+    "requirement_head": "\u8bf7\u4f60\u5199\u4e00\u4e2aadb shell \u811a\u672c\uff0c\u6700\u7ec8\u544a\u8bc9\u6211\u6211\u5f53\u524d\u8fde\u63a5\u7684\u8bbe\u5907\u7684fingerprint\u662f\u4ec0\u4e48",
+    "kind": null
+  },
+  "roles": {
+    "broker": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/20250903-091033-c14b628d/.camel_sessions/session-418b94b5-dcab-4e2d-99e5-887eca6a37be"
+    },
+    "boss": {
+      "session_dir": null
+    },
+    "worker1": {
+      "session_dir": null
+    },
+    "worker2": {
+      "session_dir": null
+    }
+  },
+  "out_dir": "/Users/kwai-sec/Desktop/magent/project/20250903-091033-c14b628d/out",
+  "status_hash": "f387fbbe4495cee1115472cca75928c9b5fddd4245ffd0f8d0011088c4c666d2",
+  "env": {
+    "python": "3.11.9 (main, Aug 31 2025, 15:22:31) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "platform": "macOS-15.5-arm64-arm-64bit",
+    "CODEX_SESSION_BASEDIR": "/Users/kwai-sec/Desktop/magent/project/20250903-091033-c14b628d/.camel_sessions"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "project_id": "\u968f\u673a\u5c0f\u6d4b\u8bd5-\u751f\u6210\u4e00\u4efd-word-\u6587\u6863-39ff73f4",
+  "requirements_file": "/Users/kwai-sec/Desktop/magent/requirement.md",
+  "summary": {
+    "requirement_head": "# \u968f\u673a\u5c0f\u6d4b\u8bd5\uff1a\u751f\u6210\u4e00\u4efd Word \u6587\u6863\n\n### Intent\ncreate_docx_line\n\n### Task\n\u8bf7\u4f60\u751f\u6210\u4e00\u4e2a Word \u6587\u6863\uff08.docx\uff09\uff0c\u91cc\u9762\u53ea\u5199\u4e00\u884c\u968f\u673a\u5185\u5bb9\u3002\n\n### Params\n- line: hello-from-broker-test-$(d",
+    "kind": "create_docx_line"
+  },
+  "roles": {
+    "broker": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u968f\u673a\u5c0f\u6d4b\u8bd5-\u751f\u6210\u4e00\u4efd-word-\u6587\u6863-39ff73f4/.camel_sessions"
+    },
+    "boss": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u968f\u673a\u5c0f\u6d4b\u8bd5-\u751f\u6210\u4e00\u4efd-word-\u6587\u6863-39ff73f4/.camel_sessions/session-f011307f-a316-4efb-9d20-4d8c93f2ec3c"
+    },
+    "worker1": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u968f\u673a\u5c0f\u6d4b\u8bd5-\u751f\u6210\u4e00\u4efd-word-\u6587\u6863-39ff73f4/.camel_sessions/session-fd2492ac-94e2-471f-a6af-bd6539310a3c"
+    },
+    "worker2": {
+      "session_dir": null
+    }
+  },
+  "out_dir": "/Users/kwai-sec/Desktop/magent/project/\u968f\u673a\u5c0f\u6d4b\u8bd5-\u751f\u6210\u4e00\u4efd-word-\u6587\u6863-39ff73f4/out",
+  "status_hash": "4fb6085a52ef7f392d7e7d92ff0d4ebf71b6e6301d506f0bf84b668dc14a312e",
+  "env": {
+    "python": "3.11.9 (main, Aug 31 2025, 15:22:31) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "platform": "macOS-15.5-arm64-arm-64bit",
+    "CODEX_SESSION_BASEDIR": "/Users/kwai-sec/Desktop/magent/project/\u968f\u673a\u5c0f\u6d4b\u8bd5-\u751f\u6210\u4e00\u4efd-word-\u6587\u6863-39ff73f4/.camel_sessions"
+  }
+}

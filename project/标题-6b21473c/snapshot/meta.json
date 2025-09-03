@@ -1,0 +1,15 @@
+{
+  "intent": "create_helloworld_c",
+  "plan_type": "c",
+  "requirements": {
+    "filename": "helloworld.c",
+    "content": "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}",
+    "binary": "hello",
+    "expected_output": "Hello, World!\n",
+    "outputs": [
+      "helloworld.c",
+      "hello"
+    ]
+  },
+  "raw_text": "# 标题\n随机项目：输出 Hello, World!\n\n## 需求\n请编写一个 C 语言程序，编译并运行，在标准输出打印一行文本：Hello, World!\n\n## 期限\n今天之内完成一次验证即可。\n\n## 结果样式\n- 控制台标准输出严格等于：Hello, World!（包含换行）。\n- 产出源文件 `helloworld.c` 与可执行文件 `hello`。\n\n## Intent\ncreate_helloworld_c\n\n## Params\n- language: c\n- message: Hello, World!\n\n## Outputs\n- helloworld.c\n- hello\n"
+}

@@ -1,0 +1,60 @@
+import json, os
+from docx import Document
+import requests
+
+COUNT = int("__COUNT__" or 10)
+OUTPUT = "__OUTPUT__" if "__OUTPUT__" else "hot.docx"
+
+def fetch_weibo_hot() -> list:
+    urls = [
+        "https://weibotop.vercel.app/api/hot",
+        "https://tenapi.cn/resou/",
+    ]
+    for u in urls:
+        try:
+            r = requests.get(u, timeout=20)
+            r.raise_for_status()
+            data = r.json()
+            items = []
+            if isinstance(data, dict):
+                for k in ("data", "list", "items", "result"):
+                    if k in data and isinstance(data[k], list):
+                        for it in data[k]:
+                            title = it.get("title") or it.get("name") or it.get("word") or str(it)
+                            desc = it.get("desc") or it.get("summary") or ""
+                            items.append({"title": str(title), "desc": str(desc)})
+                        if items:
+                            return items
+            if isinstance(data, list):
+                for it in data:
+                    title = it.get("title") if isinstance(it, dict) else str(it)
+                    desc = it.get("desc") if isinstance(it, dict) else ""
+                    items.append({"title": str(title), "desc": str(desc)})
+                if items:
+                    return items
+        except Exception:
+            continue
+    items = []
+    for i in range(COUNT):
+        items.append({"title": "热搜占位 " + str(i+1), "desc": "网络不可用或无公开接口，使用占位项。"})
+    return items
+
+
+def main():
+    items = fetch_weibo_hot()[:COUNT]
+    doc = Document()
+    doc.add_heading("微博热搜", level=1)
+    idx = 0
+    for it in items:
+        idx += 1
+        title = it.get('title','')
+        doc.add_heading(str(idx) + ". " + title, level=2)
+        desc = it.get("desc") or ""
+        if desc:
+            doc.add_paragraph(desc)
+    doc.save(OUTPUT)
+    print("saved " + OUTPUT)
+
+
+if __name__ == "__main__":
+    main()

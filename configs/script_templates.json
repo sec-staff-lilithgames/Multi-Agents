@@ -1,0 +1,108 @@
+{
+  "python": {
+    "web_weather_to_excel": """
+import json, sys
+import requests
+from openpyxl import Workbook
+
+CITY = "{city}"
+HOURS = int("{hours}") if "{hours}" else 5
+DATE = "{date}"
+OUTPUT = "{output}"
+
+# A demo data source: wttr.in (simple JSON). For production, replace with
+# an official provider and add proper parsing.
+url = f"https://wttr.in/{CITY}?format=j1"
+r = requests.get(url, timeout=30)
+r.raise_for_status()
+data = r.json()
+
+wb = Workbook()
+ws = wb.active
+ws.title = "weather"
+ws.append(["city", "date", "time", "tempC", "FeelsLikeC", "humidity", "visibility", "weatherDesc"])
+
+weather = data.get("weather", [])
+if weather:
+    day0 = weather[0]
+    hourly = day0.get("hourly", [])
+    for h in hourly[:HOURS]:
+        time = h.get("time")
+        desc = ",".join([d.get("value", "") for d in h.get("weatherDesc", [])])
+        ws.append([
+            CITY,
+            DATE or day0.get("date", ""),
+            time,
+            h.get("tempC"),
+            h.get("FeelsLikeC"),
+            h.get("humidity"),
+            h.get("visibility"),
+            desc,
+        ])
+
+wb.save(OUTPUT)
+print(f"saved {OUTPUT}")
+    """
+    ,
+    "weibo_hot_to_docx": """
+import json, os
+from docx import Document
+import requests
+
+COUNT = int("{count}" or 10)
+OUTPUT = "{output}" if "{output}" else "hot.docx"
+
+def fetch_weibo_hot() -> list:
+    # Try a few public endpoints; fall back to placeholders if all fail.
+    urls = [
+        "https://weibotop.vercel.app/api/hot",  # community mirror
+        "https://tenapi.cn/resou/",            # third-party API
+    ]
+    for u in urls:
+        try:
+            r = requests.get(u, timeout=20)
+            r.raise_for_status()
+            data = r.json()
+            # Normalize to list of dict with 'title' and 'desc'
+            items = []
+            if isinstance(data, dict):
+                # common shapes
+                for k in ("data", "list", "items", "result"):
+                    if k in data and isinstance(data[k], list):
+                        for it in data[k]:
+                            title = it.get("title") or it.get("name") or it.get("word") or str(it)
+                            desc = it.get("desc") or it.get("summary") or ""
+                            items.append({"title": str(title), "desc": str(desc)})
+                        if items:
+                            return items
+            if isinstance(data, list):
+                for it in data:
+                    title = it.get("title") if isinstance(it, dict) else str(it)
+                    desc = it.get("desc") if isinstance(it, dict) else ""
+                    items.append({"title": str(title), "desc": str(desc)})
+                if items:
+                    return items
+        except Exception:
+            continue
+    # Fallback placeholders
+    return [{"title": f"热搜占位 {i+1}", "desc": "网络不可用或无公开接口，使用占位项。"} for i in range(COUNT)]
+
+
+def main():
+    items = fetch_weibo_hot()[:COUNT]
+    doc = Document()
+    doc.add_heading("微博热搜", level=1)
+    for idx, it in enumerate(items, 1):
+        doc.add_heading(f"{idx}. {it.get('title','')}", level=2)
+        desc = it.get("desc") or ""
+        if desc:
+            doc.add_paragraph(desc)
+    doc.save(OUTPUT)
+    print(f"saved {OUTPUT}")
+
+
+if __name__ == "__main__":
+    main()
+"""
+  }
+}

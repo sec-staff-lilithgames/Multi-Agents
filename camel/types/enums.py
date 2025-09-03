@@ -1605,6 +1605,7 @@ class ModelPlatformType(Enum):
     WATSONX = "watsonx"
     QIANFAN = "qianfan"
     CRYNUX = "crynux"
+    CODEXCLI = "codex-cli"
 
     @classmethod
     def from_name(cls, name):

@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10, <3.13"
 resolution-markers = [
     "python_full_version >= '3.12'",
@@ -732,6 +732,7 @@ all = [
     { name = "math-verify" },
     { name = "mcp" },
     { name = "mem0ai" },
+    { name = "microsandbox" },
     { name = "mistralai" },
     { name = "mock" },
     { name = "mypy" },
@@ -858,6 +859,7 @@ dev-tools = [
     { name = "jupyter-client" },
     { name = "langfuse" },
     { name = "mcp" },
+    { name = "microsandbox" },
     { name = "tree-sitter" },
     { name = "tree-sitter-python" },
     { name = "typer" },
@@ -964,6 +966,7 @@ owl = [
     { name = "markitdown" },
     { name = "mcp-server-fetch" },
     { name = "mcp-simple-arxiv" },
+    { name = "microsandbox" },
     { name = "numpy" },
     { name = "onnxruntime" },
     { name = "openapi-spec-validator" },
@@ -1214,6 +1217,9 @@ requires-dist = [
     { name = "mcp-simple-arxiv", marker = "extra == 'owl'", specifier = "==0.2.2" },
     { name = "mem0ai", marker = "extra == 'all'", specifier = ">=0.1.67" },
     { name = "mem0ai", marker = "extra == 'storage'", specifier = ">=0.1.73" },
+    { name = "microsandbox", marker = "extra == 'all'", specifier = ">=0.1.0" },
+    { name = "microsandbox", marker = "extra == 'dev-tools'", specifier = ">=0.1.0" },
+    { name = "microsandbox", marker = "extra == 'owl'", specifier = ">=0.1.0" },
     { name = "mistralai", marker = "extra == 'all'", specifier = ">=1.1.0,<2" },
     { name = "mistralai", marker = "extra == 'model-platforms'", specifier = ">=1.1.0,<2" },
     { name = "mock", marker = "extra == 'all'", specifier = ">=5,<6" },
@@ -4282,6 +4288,18 @@ wheels = [
 ]
 
 [[package]]
+name = "microsandbox"
+version = "0.1.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "aiohttp" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/87/9a/29e18b3848c97a94c769e5eea558012bebae0e86bfcadbaa772615c90aa6/microsandbox-0.1.3.tar.gz", hash = "sha256:3fa0dcbc5e378c6f2984a2440a9f7719a39705bea09bd59ebe9572d9e0b6731f", size = 5428, upload-time = "2025-05-20T01:12:45.303Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f7/9b/3c3195a59b0f78a699628239452b0d910b249ef73e2874be442ce396fd75/microsandbox-0.1.3-py3-none-any.whl", hash = "sha256:10e3912597643cb74aad864afaf03d222ed4ab1ba27676df97a9de09fee8795f", size = 5540, upload-time = "2025-05-20T01:12:43.743Z" },
+]
+
+[[package]]
 name = "milvus-lite"
 version = "2.5.1"
 source = { registry = "https://pypi.org/simple" }
@@ -6015,6 +6033,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/90/35/031556dfc0d332d8e
 wheels = [
     { url = "https://files.pythonhosted.org/packages/27/ae/3be722886cc7be2093585cd94f466db1199133ab005645a7a567b249560f/pymupdf-1.26.4-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:cb95562a0a63ce906fd788bdad5239063b63068cf4a991684f43acb09052cb99", size = 23061974, upload-time = "2025-08-25T14:16:58.811Z" },
     { url = "https://files.pythonhosted.org/packages/fc/b0/9a451d837e1fe18ecdbfbc34a6499f153c8a008763229cc634725383a93f/pymupdf-1.26.4-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:67e9e6b45832c33726651c2a031e9a20108fd9e759140b9e843f934de813a7ff", size = 22410112, upload-time = "2025-08-25T14:17:24.511Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/13/0916e8e02cb5453161fb9d9167c747d0a20d58633e30728645374153f815/pymupdf-1.26.4-cp39-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:2604f687dd02b6a1b98c81bd8becfc0024899a2d2085adfe3f9e91607721fd22", size = 23454948, upload-time = "2025-08-25T21:20:07.71Z" },
     { url = "https://files.pythonhosted.org/packages/4e/c6/d3cfafc75d383603884edeabe4821a549345df954a88d79e6764e2c87601/pymupdf-1.26.4-cp39-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:973a6dda61ebd34040e4df3753bf004b669017663fbbfdaa294d44eceba98de0", size = 24060686, upload-time = "2025-08-25T14:17:56.536Z" },
     { url = "https://files.pythonhosted.org/packages/72/08/035e9d22c801e801bba50c6745bc90ba8696a042fe2c68793e28bf0c3b07/pymupdf-1.26.4-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:299a49797df5b558e695647fa791329ba3911cbbb31ed65f24a6266c118ef1a7", size = 24265046, upload-time = "2025-08-25T14:18:21.238Z" },
     { url = "https://files.pythonhosted.org/packages/28/8c/c201e4846ec0fb6ae5d52aa3a5d66f9355f0c69fb94230265714df0de65e/pymupdf-1.26.4-cp39-abi3-win32.whl", hash = "sha256:51b38379aad8c71bd7a8dd24d93fbe7580c2a5d9d7e1f9cd29ebbba315aa1bd1", size = 17127332, upload-time = "2025-08-25T14:18:39.132Z" },

@@ -1,0 +1,29 @@
+{
+  "project_id": "\u83b7\u53d6\u52a0\u8f7d\u7684so-8e38a10f",
+  "requirements_file": "/Users/kwai-sec/Desktop/magent/requirement.md",
+  "summary": {
+    "requirement_head": "# \u83b7\u53d6\u52a0\u8f7d\u7684so\n\n### Intent\n- \u83b7\u53d6\u76ee\u6807\u5305\u7b2c\u4e00\u4e2a\u52a0\u8f7d\u7684so\u662f\u4ec0\u4e48\n\n### Task\n- \u8bf7\u4f60\u7528Frida\u5c1d\u8bd5hook \u5f53\u524d\u8fde\u63a5\u7684Android\u8bbe\u5907\u4e0a \u5305\u540d\u4e3acom.tencent.mm\u5176\u52a0\u8f7d\u7684\u7b2c\u4e00\u4e2aso\u53eb\u4ec0\u4e48\u540d\u5b57\n\n\n### Environment\n- Andr",
+    "kind": "create_docx_line"
+  },
+  "roles": {
+    "broker": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u83b7\u53d6\u52a0\u8f7d\u7684so-8e38a10f/.camel_sessions"
+    },
+    "boss": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u83b7\u53d6\u52a0\u8f7d\u7684so-8e38a10f/.camel_sessions/session-be7afa5a-1204-4b61-b740-b703fc23a395"
+    },
+    "worker1": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u83b7\u53d6\u52a0\u8f7d\u7684so-8e38a10f/.camel_sessions/session-734e6bae-3662-46d7-881d-94505374e540"
+    },
+    "worker2": {
+      "session_dir": null
+    }
+  },
+  "out_dir": "/Users/kwai-sec/Desktop/magent/project/\u83b7\u53d6\u52a0\u8f7d\u7684so-8e38a10f/out",
+  "status_hash": "77abb738b9748f9a15891b085d20d335ee5f5316a3254465fdaec772e8f8c7e5",
+  "env": {
+    "python": "3.11.9 (main, Aug 31 2025, 15:22:31) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "platform": "macOS-15.5-arm64-arm-64bit",
+    "CODEX_SESSION_BASEDIR": "/Users/kwai-sec/Desktop/magent/project/\u83b7\u53d6\u52a0\u8f7d\u7684so-8e38a10f/.camel_sessions"
+  }
+}

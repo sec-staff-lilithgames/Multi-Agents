@@ -1,0 +1,29 @@
+{
+  "project_id": "\u5fae\u535a\u70ed\u641c-016ccb41",
+  "requirements_file": "/Users/kwai-sec/Desktop/magent/requirement.md",
+  "summary": {
+    "requirement_head": "# \u5fae\u535a\u70ed\u641c\n\n### Intent\n- \u83b7\u53d6\u5fae\u535a\u70ed\u641c\u699c\n\n### Task\n- \u8bf7\u4f60\u767b\u9646weibo.com \u5e76\u5c1d\u8bd5\u62c9\u53d6\u5176\u4e2d\u524d\u5341\u6761\u70ed\u641c\u699c\u5185\u5bb9\uff0c\u89e3\u6790\u5176\u4e2d\u5185\u5bb9\u5e76\u8f93\u51fa\u4e00\u4e2a\u7b80\u5355\u7684\u5185\u5bb9\u6458\u8981\n\n### Params\n- \u65e0\n\n### Environment\n- \u4efb\u4f55\u73af\u5883\n\n### Outpu",
+    "kind": "weibo_hot_to_docx"
+  },
+  "roles": {
+    "broker": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u5fae\u535a\u70ed\u641c-016ccb41/.camel_sessions"
+    },
+    "boss": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u5fae\u535a\u70ed\u641c-016ccb41/.camel_sessions/session-b1740e9c-858b-43ba-bae8-76b0a7527695"
+    },
+    "worker1": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/\u5fae\u535a\u70ed\u641c-016ccb41/.camel_sessions/session-597f6f91-03b8-428f-b22a-462562d6bc7f"
+    },
+    "worker2": {
+      "session_dir": null
+    }
+  },
+  "out_dir": "/Users/kwai-sec/Desktop/magent/project/\u5fae\u535a\u70ed\u641c-016ccb41/out",
+  "status_hash": "eb1bf5a58e84aad5ef3f167e6d152c83b7d947c86d4cc5429fe483650acd53f0",
+  "env": {
+    "python": "3.11.9 (main, Aug 31 2025, 15:22:31) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "platform": "macOS-15.5-arm64-arm-64bit",
+    "CODEX_SESSION_BASEDIR": "/Users/kwai-sec/Desktop/magent/project/\u5fae\u535a\u70ed\u641c-016ccb41/.camel_sessions"
+  }
+}

@@ -1,0 +1,19 @@
+# 微博热搜
+
+### Intent
+- 获取微博热搜榜
+
+### Task
+- 请你登陆weibo.com 并尝试拉取其中前十条热搜榜内容，解析其中内容并输出一个简单的内容摘要
+
+### Params
+- 无
+
+### Environment
+- 任何环境
+
+### Outputs
+- hot.docx
+
+### Acceptance
+- 文件 output.docx 存在，打开后按照word格式每一条热搜配一个标题，一张配图和一段简要的文字描述

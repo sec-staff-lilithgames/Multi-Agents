@@ -1,0 +1,30 @@
+{
+  "project_id": "title-caff726a",
+  "created_at": "2025-09-03T11:20:00.646163",
+  "requirements_file": "/Users/kwai-sec/Desktop/magent/requirement.md",
+  "summary": {
+    "requirement_head": "# Title\n\n### Intent\ncreate_docx_line\n\n### Task\n\u8bf7\u4f60\u751f\u6210\u4e00\u4e2a Word \u6587\u6863\uff08.docx\uff09\uff0c\u91cc\u9762\u53ea\u5199\u4e00\u884c\u6587\u672c\u3002\n\n### Params\n- line: helloworld\n\n### Environment\n- Python \u53ef\u7528\uff1b\u5141",
+    "kind": "create_docx_line"
+  },
+  "roles": {
+    "broker": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/title-caff726a/.camel_sessions/session-f620622b-b434-42a1-94e3-0bd34c9d724b"
+    },
+    "boss": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/title-caff726a/.camel_sessions/session-dbe101de-9f90-49ad-a6f9-6e6e8350e538"
+    },
+    "worker1": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/title-caff726a/.camel_sessions/session-d6b2a8a8-c3aa-48d8-9059-06826b92f785"
+    },
+    "worker2": {
+      "session_dir": null
+    }
+  },
+  "out_dir": "/Users/kwai-sec/Desktop/magent/project/title-caff726a/out",
+  "status_hash": "50e62d8514e7eabe751fd8a85c5a9d1e5dd15a1fb633299c88cbcc9f87aebb12",
+  "env": {
+    "python": "3.11.9 (main, Aug 31 2025, 15:22:31) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "platform": "macOS-15.5-arm64-arm-64bit",
+    "CODEX_SESSION_BASEDIR": "/Users/kwai-sec/Desktop/magent/project/title-caff726a/.camel_sessions"
+  }
+}

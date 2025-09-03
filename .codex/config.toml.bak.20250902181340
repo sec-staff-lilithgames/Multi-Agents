@@ -1,0 +1,20 @@
+[projects."/Users/kwai-sec/Downloads"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/realflowproject"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/kpm"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/exploits"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/ebpf"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/blackMagic"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/vmpunpacker"]
+trust_level = "trusted"

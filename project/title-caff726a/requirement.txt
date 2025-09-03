@@ -1,0 +1,19 @@
+# Title
+
+### Intent
+create_docx_line
+
+### Task
+请你生成一个 Word 文档（.docx），里面只写一行文本。
+
+### Params
+- line: helloworld
+
+### Environment
+- Python 可用；允许安装 python-docx（若不能联网，请预装 python-docx）
+
+### Outputs
+- output.docx
+
+### Acceptance
+- 文件 output.docx 存在，打开后只有一行内容：helloworld

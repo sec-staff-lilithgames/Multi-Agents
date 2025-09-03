@@ -1,0 +1,32 @@
+[
+  {
+    "match_any": ["adb not found", "command not found: adb"],
+    "needs": [{"type": "binary", "name": "adb", "status": "missing"}],
+    "message": "需要安装 Android adb 并将其加入 PATH。"
+  },
+  {
+    "match_any": ["no connected device", "unauthorized", "no devices/emulators found"],
+    "needs": [{"type": "device", "name": "android", "status": "not_connected_or_unauthorized"}],
+    "message": "需要连接并授权至少一台处于 device 状态的 Android 设备。"
+  },
+  {
+    "match_any": ["Could not find a version that satisfies the requirement python-docx", "pip", "install", "Failed"],
+    "needs": [{"type": "pip", "package": "python-docx", "status": "install_failed"}],
+    "message": "依赖安装失败，请确保网络可用或预先安装 python-docx。"
+  },
+  {
+    "match_any": ["Could not find a version that satisfies the requirement requests", "pip", "install", "Failed"],
+    "needs": [{"type": "pip", "package": "requests", "status": "install_failed"}],
+    "message": "依赖 requests 安装失败，请确保网络可用或预先安装。"
+  },
+  {
+    "match_any": ["Could not find a version that satisfies the requirement openpyxl", "pip", "install", "Failed"],
+    "needs": [{"type": "pip", "package": "openpyxl", "status": "install_failed"}],
+    "message": "依赖 openpyxl 安装失败，请确保网络可用或预先安装。"
+  },
+  {
+    "match_any": ["not found", "fatal error: stdio.h"],
+    "needs": [{"type": "binary", "name": "cc", "status": "missing_or_broken"}],
+    "message": "编译失败，请确认已安装 C 编译器（cc/gcc/clang）。"
+  }
+]

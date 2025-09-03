@@ -1,0 +1,39 @@
+import json, sys
+import requests
+from openpyxl import Workbook
+
+CITY = "__CITY__"
+HOURS = int("__HOURS__") if "__HOURS__" else 5
+DATE = "__DATE__"
+OUTPUT = "__OUTPUT__"
+
+url = "https://wttr.in/" + CITY + "?format=j1"
+r = requests.get(url, timeout=30)
+r.raise_for_status()
+data = r.json()
+
+wb = Workbook()
+ws = wb.active
+ws.title = "weather"
+ws.append(["city", "date", "time", "tempC", "FeelsLikeC", "humidity", "visibility", "weatherDesc"])
+
+weather = data.get("weather", [])
+if weather:
+    day0 = weather[0]
+    hourly = day0.get("hourly", [])
+    for h in hourly[:HOURS]:
+        time = h.get("time")
+        desc = ",".join([d.get("value", "") for d in h.get("weatherDesc", [])])
+        ws.append([
+            CITY,
+            DATE or day0.get("date", ""),
+            time,
+            h.get("tempC"),
+            h.get("FeelsLikeC"),
+            h.get("humidity"),
+            h.get("visibility"),
+            desc,
+        ])
+
+wb.save(OUTPUT)
+print("saved " + OUTPUT)

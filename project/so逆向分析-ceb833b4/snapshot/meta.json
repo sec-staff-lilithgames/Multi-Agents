@@ -1,0 +1,12 @@
+{
+  "intent": "so逆向分析",
+  "plan_type": "bash",
+  "requirements": {
+    "script_name": "analyze_frida_detection.sh",
+    "script_content": "#!/bin/bash\n\n# 定义输入文件和输出目录\nINPUT_SO=\"libmsaoaidsec.so\"\nOUTPUT_DIR=\"frida_analysis\"\n\n# 创建输出目录\nmkdir -p $OUTPUT_DIR\n\n# 使用readelf提取符号表\nreadelf -s $INPUT_SO > $OUTPUT_DIR/symbol_table.txt\n\n# 使用objdump反汇编so文件\nobjdump -d $INPUT_SO > $OUTPUT_DIR/disassembly.txt\n\n# 使用IDA Pro进行反汇编（假设ida64在PATH中）\nida64 -B -S\"script_to_export_frida_related_functions.py\" $INPUT_SO\n\n# 生成Word文档（假设使用python-docx库）\npython3 create_report.py $OUTPUT_DIR\n\n# 清理临时文件\nrm -rf $OUTPUT_DIR/*.tmp\n",
+    "outputs": [
+      "frida_analysis/frida_detection_report.docx"
+    ]
+  },
+  "raw_text": "# so逆向分析\n分析目标so中所有关于Frida的检测点\n\n## 需求\n请分析我给定的so，纯静态分析其中对于Frida的检测点，整理一篇word文档，其中包含每一个检测点的汇编部分截图以及简要的讲解；\n\n## 期限\n今天之内完成一次即可。\n\n## 结果样式\n- 一个docx文档，里面包含对于Frida每一个检测点的汇编部分截图\n- 每一个截图上需要配一个简单的检测点描述\n\n\n\n"
+}

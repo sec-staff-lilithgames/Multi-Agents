@@ -1,0 +1,6 @@
+# Ignore everything by default
+*
+
+# Allow docs and ignore file
+!.gitignore
+!README.md

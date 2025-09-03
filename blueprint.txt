@@ -1,0 +1,39 @@
+
+▌1. 目标结构是用户和四个具有llm能力的agent: broker,boss,worker1,worker2
+
+▌2. agent之间采用mcp交流
+
+▌3. broker仅仅与boss和用户交流，对worker不可见；它负责接受用户的自然语言prompt requirement.md作为输入并且仅仅以该文件
+▌与用户沟通，然后他负责把自然语言转换为boss可以理解的metainfo；他有权评估用户请求中表述不清以及环境要求并在评估阶段问
+▌用户索要更多信息；
+
+▌4. boss仅仅和worker以及broker交流，对用户不可见；他负责接受broker的Metainfo并据此对任务难度进行合理评估，分次分配给每
+▌个worker，同时他负责定时检查worker的工作进展，根据工作进展来动态调整工作计划；当所有的worker都提交并完成工作之后，boss负责将结果整合成metainfo然后反馈给broker；
+ 
+ 5. worker 仅仅和boss交流，对用户和broker均不可见；他只负责接受boss下发的任务清单并执行任务，worker有权评估当前环境是否需要用户介入，如果需要则向boss
+ 提出申请，由boss评估裁决，裁决通过之后向broker提出申请，broker传达最终的请求到用户并pause当前进度；
+
+ 6. 根目录下的roles目录里面存放四个智能体的档案信息，目前其model均采用keystone目录下的qwen-plus.key的其中的qwen-plus模型；
+ 
+ 7. 用户只要简单的执行python3 run.py requirement.md 就可以直接开始工作，此时broker开始评估requirement的合理性如果合理就开始解析并转化为metainfo
+ 如果不合理就尝试向用户提出细节要求，此时用户需要修改requirement.md之后重新执行python3 run.py requirement.md重新进行评估
+
+ 8. requirement.md的样板我已经给出，用户随时可以在该样板上添加或删减，broker必须具有较强的自然语言处理能力以理解用户需求
+
+ 9. workdir下是每个agent的私有目录，每个agent的中间执行产物应当放到这里，它们的私有目录具有不同的访问权限：
+ broker的目录对broker和boss可读可写，对worker不可访问；
+ boss的目录对broker可读可写，对worker可读可写；
+ worker的目录对其他worker可读可写，对boss可读可写，对broker不可访问；
+
+ 10. attachments目录是用户提交的附件目录，是公开目录，任何智能体可读可写；
+
+ 11. run.py需要添加选项 -d用于表明debug模式，此时shell中应当输出每个agent的工作进度；
+
+ 12. 所有项目结果单独保存到project目录下，项目名称按照requirement.md的标题进行设置，项目结构中需要保存:
+ out: 结果目录，用户对于该项目最终的结果输出由broker放在这里；
+ snapshot：状态快照，需要定义一个状态信息以标志当前每个智能体的context hash，如果用户要尝试恢复该项目状态可以python -r {project_name} 就可以让agent迅速恢复状态；
+ requirement.txt: 每一个project下维护一个该项目的虚拟环境
+
+ 13. guideline：agent具有全局guideline，每个agent必须严格遵守这个guideline，这个guideline需要apply到每一个broker的pre instructions里面；
+
+ 14. 在debug模式下，我们要求实时输出当前每个智能体的工作状态，获取的方法是读取其中每个agent session并做一个摘要输出，说明当前正在干什么。这个日志信息我们保存在每一个project下新建的一个log目录下

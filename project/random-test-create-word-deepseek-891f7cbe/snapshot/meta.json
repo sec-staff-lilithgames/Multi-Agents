@@ -1,0 +1,12 @@
+{
+  "intent": "Create a Word (.docx) file with a specific random line content and output file name",
+  "plan_type": "python",
+  "requirements": {
+    "script_name": "create_word_file.py",
+    "script_content": "from docx import Document\n\ndoc = Document()\ndoc.add_paragraph('rand-1756888301')\ndoc.save('output.docx')",
+    "outputs": [
+      "output.docx"
+    ]
+  },
+  "raw_text": "# Random Test: Create Word (DeepSeek)\n\nPlease create a Word (.docx) file with exactly one line: rand-1756888301\nOutput file name: output.docx\n\n"
+}

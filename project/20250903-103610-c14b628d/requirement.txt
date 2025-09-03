@@ -1,0 +1,1 @@
+请你写一个adb shell 脚本，最终告诉我我当前连接的设备的fingerprint是什么

@@ -1,0 +1,20 @@
+{
+  "name": "Worker2",
+  "role": "worker2",
+  "description": "Endpoint MCP worker for runtime/verification duties.",
+  "command": "python",
+  "args": [
+    "examples/usecases/codex_cli_hello_world_mcp/worker_server.py",
+    "--role",
+    "runner_verifier",
+    "--mode",
+    "stdio"
+  ],
+  "mode": "stdio",
+  "model": {
+    "provider": "openai",
+    "name": "gpt-5-medium"
+  },
+  "env": {
+  }
+}

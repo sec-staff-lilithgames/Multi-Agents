@@ -1,0 +1,29 @@
+{
+  "project_id": "random-test-create-word-deepseek-891f7cbe",
+  "requirements_file": "/Users/kwai-sec/Desktop/magent/requirement.md",
+  "summary": {
+    "requirement_head": "# Random Test: Create Word (DeepSeek)\n\nPlease create a Word (.docx) file with exactly one line: rand-1756888301\nOutput file name: output.doc",
+    "kind": "Create a Word (.docx) file with a specific random line content and output file name"
+  },
+  "roles": {
+    "broker": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/random-test-create-word-deepseek-891f7cbe/.camel_sessions"
+    },
+    "boss": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/random-test-create-word-deepseek-891f7cbe/.camel_sessions/session-b5ab5392-b448-44e2-856b-dce7654b4e7f"
+    },
+    "worker1": {
+      "session_dir": "/Users/kwai-sec/Desktop/magent/project/random-test-create-word-deepseek-891f7cbe/.camel_sessions/session-6fe91cc3-f6b2-40fa-9fca-7dd5861ce263"
+    },
+    "worker2": {
+      "session_dir": null
+    }
+  },
+  "out_dir": "/Users/kwai-sec/Desktop/magent/project/random-test-create-word-deepseek-891f7cbe/out",
+  "status_hash": "0b871b2bd8c657428219208a3489e2b5fa88b10b489232cbb3859cbad055e901",
+  "env": {
+    "python": "3.12.11 (main, Jun  3 2025, 15:41:47) [Clang 17.0.0 (clang-1700.0.13.3)]",
+    "platform": "macOS-15.5-arm64-arm-64bit",
+    "CODEX_SESSION_BASEDIR": "/Users/kwai-sec/Desktop/magent/project/random-test-create-word-deepseek-891f7cbe/.camel_sessions"
+  }
+}

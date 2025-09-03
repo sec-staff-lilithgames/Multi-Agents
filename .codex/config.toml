@@ -1,0 +1,16 @@
+full-auto = true
+bypass-approvals = true
+bypass-sandbox = true
+trusted-workspace = true
+
+[projects."/Users/kwai-sec/Desktop/blackMagic"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/ebpf"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/magent"]
+trust_level = "trusted"
+
+[projects."/Users/kwai-sec/Desktop/论文"]
+trust_level = "trusted"

@@ -12,6 +12,7 @@ project/
     snapshot/
       snapshot.json                # roles, status hash, env
       needs.json                   # present only if action_required occurred
+    log/                           # role-specific debug logs (when CODEX_DEBUG)
     .camel_sessions/               # per-project session root for all roles
 ```
 

@@ -1,3 +1,16 @@
+# ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 import argparse
 import json
 import os
@@ -13,6 +26,18 @@ from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType
 
+
+def log_progress(role: str, message: str) -> None:
+    log_dir = os.environ.get("CODEX_LOG_DIR")
+    if not log_dir:
+        return
+    try:
+        p = Path(log_dir) / f"{role}.log"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with p.open("a", encoding="utf-8") as f:
+            f.write(message.rstrip() + "\n")
+    except Exception:
+        pass
 
 def spawn_worker(role: str, worker_script: Path):
     import sys
@@ -35,8 +60,8 @@ class Boss:
       Returns: {"ok": bool, "artifacts": [str], "kind": str, "stdout": str, "stderr": str}
     """
 
-    def __init__(self):
-        self.debug = bool(os.environ.get("CODEX_DEBUG"))
+    def __init__(self, debug: bool = False):
+        self.debug = bool(debug or os.environ.get("CODEX_DEBUG"))
         # Ensure private role workdir with strict permissions
         role_priv = Path.cwd() / "workdir" / "boss"
         role_priv.mkdir(parents=True, exist_ok=True)
@@ -167,7 +192,9 @@ class Boss:
 
     async def _run_workers(self, meta: Dict) -> Dict:
         if self.debug:
-            print("[DEBUG][boss] meta received: plan_type=", meta.get("plan_type"), "intent=", meta.get("intent"), flush=True)
+            msg = f"meta received: plan_type={meta.get('plan_type')} intent={meta.get('intent')}"
+            print(f"[DEBUG][boss] {msg}", flush=True)
+            log_progress("boss", msg)
         # Locate shared worker server
         worker_script = Path(__file__).parents[1] / "codex_cli_hello_world_mcp" / "worker_server.py"
         if not worker_script.exists():
@@ -177,11 +204,15 @@ class Boss:
         w1_cfg = spawn_worker("writer_compiler", worker_script)
         w2_cfg = spawn_worker("runner_verifier", worker_script)
         if self.debug:
-            print("[DEBUG][boss] spawned worker configs", flush=True)
+            msg = "spawned worker configs"
+            print(f"[DEBUG][boss] {msg}", flush=True)
+            log_progress("boss", msg)
 
         kind = self._decide_kind(meta)
         if self.debug:
-            print("[DEBUG][boss] decided kind:", kind, flush=True)
+            msg = f"decided kind: {kind}"
+            print(f"[DEBUG][boss] {msg}", flush=True)
+            log_progress("boss", msg)
 
         async with MCPClient(w1_cfg, timeout=120.0) as w1, MCPClient(w2_cfg, timeout=120.0) as w2:
             from camel.utils.mcp_client import ServerConfig  # type: ignore
@@ -195,7 +226,9 @@ class Boss:
             # Generic Python plan if provided by broker
             if (meta.get("plan_type") == "python") and isinstance(meta.get("requirements"), dict) and meta["requirements"].get("script_content"):
                 if self.debug:
-                    print("[DEBUG][boss] branch: python-inline-script", flush=True)
+                    msg = "branch: python-inline-script"
+                    print(f"[DEBUG][boss] {msg}", flush=True)
+                    log_progress("boss", msg)
                 reqm = meta["requirements"]
                 script_name = reqm.get("script_name", "main.py")
                 script_content = reqm.get("script_content", "")
@@ -231,7 +264,9 @@ class Boss:
 
             if kind == "create_docx_line":
                 if self.debug:
-                    print("[DEBUG][boss] branch: create_docx_line", flush=True)
+                    msg = "branch: create_docx_line"
+                    print(f"[DEBUG][boss] {msg}", flush=True)
+                    log_progress("boss", msg)
                 line = ((meta.get("requirements") or {}).get("params") or {}).get("line") or "Hello, world"
                 script_name = "make_docx.py"
                 docx_name = "output.docx"
@@ -281,7 +316,9 @@ class Boss:
 
             if kind == "get_android_build_fingerprint":
                 if self.debug:
-                    print("[DEBUG][boss] branch: get_android_build_fingerprint", flush=True)
+                    msg = "branch: get_android_build_fingerprint"
+                    print(f"[DEBUG][boss] {msg}", flush=True)
+                    log_progress("boss", msg)
                 script_name = "get_fingerprint.sh"
                 out_name = "fingerprint.txt"
                 script = f"""
@@ -352,7 +389,9 @@ echo "FINGERPRINT: $fp"
 
             # Default C hello world
             if self.debug:
-                print("[DEBUG][boss] branch: default_c_hello", flush=True)
+                msg = "branch: default_c_hello"
+                print(f"[DEBUG][boss] {msg}", flush=True)
+                log_progress("boss", msg)
             req = {
                 "filename": "helloworld.c",
                 "content": '#include <stdio.h>\nint main(){ printf("Hello, World!\\n"); return 0; }\n',
@@ -411,10 +450,16 @@ echo "FINGERPRINT: $fp"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", default="stdio", choices=["stdio", "sse", "streamable-http"], help="MCP transport mode")
+    parser.add_argument("-d", "--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
 
-    worker = Boss()
+    if args.debug:
+        os.environ["CODEX_DEBUG"] = "1"
+
+    worker = Boss(debug=args.debug)
     print(json.dumps({"session_dir": str(worker.session.work_dir)}), flush=True)
+    if worker.debug:
+        log_progress("boss", f"session: {worker.session.work_dir}")
     worker.mcp.run(args.mode)
 
 

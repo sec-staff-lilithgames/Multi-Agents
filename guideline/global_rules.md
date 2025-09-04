@@ -15,10 +15,9 @@ These rules are mandatory. Agents must implement them exactly and fail fast when
 ## Requirement Parsing
 - Primary source is `requirement.md`. Supported sections (case-insensitive): `Intent`, `Task`, `Params`, `Environment`, `Outputs`, `Acceptance`, `Limits`.
 - Broker must parse markdown and merge with clarifications (responses override file when in conflict).
-- Broker should leverage LLM to analyze free-form requirements into structured MetaInfo; rule-driven parsing (`configs/intent_rules.json`) may be used as fallback.
+- Broker must leverage LLM to analyze free-form requirements into structured MetaInfo. If the LLM is unavailable or errors, the broker must halt and report the unavailability and its reason to the user; no other fallback strategies are permitted.
 
 ## Data‑Driven Behavior (No Hardcoding)
-- Maintain intent recognition in `configs/intent_rules.json` (include `match_any`, optional `extractors`, `required_params`, optional `template_key`).
 - Maintain environment diagnostics in `configs/diagnostic_rules.json` (regex patterns → `needs[]` + `message`).
 - Maintain script templates in `configs/script_templates.json` or `configs/templates/*` (language‑specific) and render via placeholders. Do not embed large scripts in code.
 

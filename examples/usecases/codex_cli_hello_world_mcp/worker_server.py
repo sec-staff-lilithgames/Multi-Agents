@@ -1,6 +1,20 @@
+# ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 import argparse
 import json
 import os
+from pathlib import Path
 from typing import Dict, Optional
 
 from camel.runtime.codex_cli_session import CodexCliSession
@@ -8,6 +22,19 @@ from camel.utils.mcp import MCPServer
 from camel.agents import ChatAgent
 from camel.models import ModelFactory
 from camel.types import ModelPlatformType
+
+
+def log_progress(role: str, message: str) -> None:
+    log_dir = os.environ.get("CODEX_LOG_DIR")
+    if not log_dir:
+        return
+    try:
+        p = Path(log_dir) / f"{role}.log"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with p.open("a", encoding="utf-8") as f:
+            f.write(message.rstrip() + "\n")
+    except Exception:
+        pass
 
 
 @MCPServer(function_names=["do_step"], server_name="WorkerAgent")
@@ -21,9 +48,9 @@ class Worker:
     - verify_output: payload {"expected": str, "from_run": str}
     """
 
-    def __init__(self, role: str):
+    def __init__(self, role: str, debug: bool = False):
         self.role = role
-        self.debug = bool(os.environ.get("CODEX_DEBUG"))
+        self.debug = bool(debug or os.environ.get("CODEX_DEBUG"))
         # Ensure private role workdir with strict permissions
         from pathlib import Path as _P
         import os as _os
@@ -59,6 +86,13 @@ class Worker:
         self.session = CodexCliSession.create()
         # Optional LLM assistant for quick diagnostics
         self.llm = self._create_llm()
+
+    def _log_role(self) -> str:
+        mapping = {
+            "writer_compiler": "worker1",
+            "runner_verifier": "worker2",
+        }
+        return mapping.get(self.role, self.role)
 
     def _create_llm(self) -> Optional[ChatAgent]:
         try:
@@ -217,7 +251,9 @@ class Worker:
     def do_step(self, step: str, payload: Dict, timeout: Optional[float] = 20.0) -> Dict:
         try:
             if self.debug:
-                print(f"[DEBUG][worker:{self.role}] step={step} payload_keys={list(payload.keys())}", flush=True)
+                msg = f"step={step} payload_keys={list(payload.keys())}"
+                print(f"[DEBUG][worker:{self.role}] {msg}", flush=True)
+                log_progress(self._log_role(), msg)
             if step == "write_file":
                 filename = payload["filename"]
                 content = payload["content"]
@@ -286,10 +322,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--role", required=True, help="worker role name")
     parser.add_argument("--mode", default="stdio", choices=["stdio", "sse", "streamable-http"], help="MCP transport mode")
+    parser.add_argument("-d", "--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
 
-    worker = Worker(role=args.role)
+    if args.debug:
+        os.environ["CODEX_DEBUG"] = "1"
+
+    worker = Worker(role=args.role, debug=args.debug)
     print(json.dumps({"session_dir": str(worker.session.work_dir)}))
+    if worker.debug:
+        log_progress(worker._log_role(), f"session: {worker.session.work_dir}")
     worker.mcp.run(args.mode)
 
 

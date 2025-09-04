@@ -1,3 +1,16 @@
+# ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ========= Copyright 2023-2024 @ CAMEL-AI.org. All Rights Reserved. =========
 import argparse
 import json
 import os
@@ -8,6 +21,19 @@ from typing import Dict, List
 from camel.runtime.codex_cli_session import CodexCliSession
 from camel.utils.mcp_client import MCPClient
 
+
+def log_progress(role: str, message: str) -> None:
+    """Append a progress message to the role-specific log file."""
+    log_dir = os.environ.get("CODEX_LOG_DIR")
+    if not log_dir:
+        return
+    try:
+        p = Path(log_dir) / f"{role}.log"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with p.open("a", encoding="utf-8") as f:
+            f.write(message.rstrip() + "\n")
+    except Exception:
+        pass
 
 def extract_title(text: str) -> str:
     for ln in text.splitlines():
@@ -245,7 +271,9 @@ def main():
     session = CodexCliSession.create()
     print(json.dumps({"session_dir": str(session.work_dir)}))
     if DBG:
-        print("[DEBUG][broker] session:", session.work_dir, flush=True)
+        msg = f"session: {session.work_dir}"
+        print(f"[DEBUG][broker] {msg}", flush=True)
+        log_progress("broker", msg)
 
     if args.requirement:
         req_path = Path(args.requirement)
@@ -291,7 +319,9 @@ def main():
 
     print("[Broker] 分析 requirement.md：没问题，开始工作……")
     if DBG:
-        print("[DEBUG][broker] meta summary:\n" + summarize_meta(meta), flush=True)
+        summary = summarize_meta(meta)
+        print("[DEBUG][broker] meta summary:\n" + summary, flush=True)
+        log_progress("broker", summary)
 
     # Prepare project directory by title
     title = extract_title(text)
@@ -304,6 +334,11 @@ def main():
     project_dir = project_root / f"{slug}-{h}"
     (project_dir / "out").mkdir(parents=True, exist_ok=True)
     (project_dir / "snapshot").mkdir(parents=True, exist_ok=True)
+    if DBG:
+        log_dir = project_dir / "log"
+        log_dir.mkdir(parents=True, exist_ok=True)
+        os.environ["CODEX_LOG_DIR"] = str(log_dir.resolve())
+        log_progress("broker", f"project dir: {project_dir}")
     # ensure per-project requirement.txt for venv management
     try:
         reqm = (meta.get("requirements") or {})
@@ -343,7 +378,9 @@ def main():
 
     result = asyncio.run(run_boss_once(meta))
     if DBG:
-        print("[DEBUG][broker] boss result keys:", list(result.keys()), flush=True)
+        msg = f"boss result keys: {list(result.keys())}"
+        print(f"[DEBUG][broker] {msg}", flush=True)
+        log_progress("broker", msg)
     # File-only UX: if environment required, instruct user to update requirement.md and exit
     if not result.get("ok") and result.get("action_required") == "environment":
         print("[Boss→Broker] 需要准备环境，已暂停执行。")
@@ -363,6 +400,8 @@ def main():
             print("- ", p)
     else:
         print("执行未完成，详情见：", copied["result_json"])
+    if DBG:
+        log_progress("broker", "execution finished")
 
 
 if __name__ == "__main__":
